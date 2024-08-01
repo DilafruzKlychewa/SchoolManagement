@@ -24,7 +24,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/save/{userRole}") // http://localhost:8080/user/save/Admin  + JSON + POST
+    @PostMapping("/save/{userRole}") // http://localhost:8081/user/save/Admin  + JSON + POST
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage<UserResponse>> saveUser(@RequestBody @Valid UserRequest userRequest,
                                                                   @PathVariable String userRole){
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     // Not: getAllAdminOrDeanOrViceDeanByPage() ******************************************
-    @GetMapping("/getAllUserByPage/{userRole}") // http://localhost:8080/user/getAllUserByPage/Admin
+    @GetMapping("/getAllUserByPage/{userRole}") // http://localhost:8081/user/getAllUserByPage/Admin
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Page<UserResponse>> getUserByPage(
             @PathVariable String userRole,
@@ -47,7 +47,7 @@ public class UserController {
 
     // Not :  getUserById() *********************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    @GetMapping("getUserById/{userId}")  // http://localhost:8080/user/getUserById/1
+    @GetMapping("getUserById/{userId}")  // http://localhost:8081/user/getUserById/1
     public ResponseMessage<BaseUserResponse> getUserById(@PathVariable Long userId){
         return userService.getUserById(userId) ;
     }
@@ -55,7 +55,7 @@ public class UserController {
     // Not : deleteUser() **********************************************************
     // !!! Admin ise hepsini silebilsin
     // !!! Mudur ve Mudur Yrd ise altindaki rol yetkisi olani silebilsin
-    @DeleteMapping("/delete/{id}") //http://localhost:8080/user/delete/3
+    @DeleteMapping("/delete/{id}") //http://localhost:8081/user/delete/3
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id ,
                                                  HttpServletRequest httpServletRequest){
@@ -65,7 +65,7 @@ public class UserController {
     // Not: updateAdminOrDeanOrViceDean() ********************************************
     // !!! Admin --> Dean veya  ViceDEan i guncellerken kullanilacak method
     // !!! Student ve teacher icin ekstra fieldlar gerekecegi icin, baska endpoint gerekiyor
-    @PutMapping("/update/{userId}") // http://localhost:8080/user/update/1
+    @PutMapping("/update/{userId}") // http://localhost:8081/user/update/1
     @PreAuthorize("hasAuthority('ADMIN')")
     //!!! donen deger BaseUserResponse --> polymorphism
     public ResponseMessage<BaseUserResponse> updateAdminDeanViceDeanForAdmin(
@@ -77,7 +77,7 @@ public class UserController {
     // Not: updateUserForUser() **********************************************************
     // !!! Kullanicinin kendisini update etmesini saglayan method
     // !!! AuthenticationController da updatePassword oldugu icin buradaki DTO da password olmamali
-    @PatchMapping("/updateUser")   // http://localhost:8080/user/updateUser
+    @PatchMapping("/updateUser")   // http://localhost:8081/user/updateUser
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER')")
     public ResponseEntity<String>updateUser(@RequestBody @Valid
                                                 UserRequestWithoutPassword userRequestWithoutPassword,
@@ -88,7 +88,7 @@ public class UserController {
 
     // Not : getByName() ***************************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
-    @GetMapping("/getUserByName")   // http://localhost:8080/user/getUserByName?name=user1
+    @GetMapping("/getUserByName")   // http://localhost:8081/user/getUserByName?name=user1
     public List<UserResponse> getUserByName(@RequestParam (name = "name") String userName){
         return userService.getUserByName(userName) ;
     }

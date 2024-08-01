@@ -1,5 +1,4 @@
 package com.project.contactmessage.service;
-
 import com.project.contactmessage.dto.ContactMessageRequest;
 import com.project.contactmessage.dto.ContactMessageResponse;
 import com.project.contactmessage.entity.ContactMessage;

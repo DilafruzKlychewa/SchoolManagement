@@ -16,5 +16,9 @@ public interface LessonProgramRepository extends JpaRepository<LessonProgram, Lo
     Set<LessonProgram> getLessonProgramByUsersUsername(String userName);
 
     List<LessonProgram> findByUsers_IdNotNull();
+
+    @Query("SELECT l FROM LessonProgram l WHERE l.id IN :myProperty")
+    Set<LessonProgram> getLessonProgramByLessonProgramIdList(Set<Long> myProperty);
+
 }
 

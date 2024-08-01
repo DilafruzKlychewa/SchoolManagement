@@ -1,5 +1,4 @@
 package com.project.contactmessage.messages;
-
 public class Messages {
 
     public static final String NOT_FOUND_MESSAGE = "Message Not Found";
@@ -7,3 +6,4 @@ public class Messages {
     public static final String WRONG_DATE_MESSAGE = "Wrong Date Format";
     public static final String WRONG_TIME_MESSAGE = "Wrong Time Format";
 }
+

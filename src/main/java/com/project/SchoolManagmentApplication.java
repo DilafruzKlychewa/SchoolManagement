@@ -20,13 +20,13 @@ public class SchoolManagmentApplication implements CommandLineRunner {
 	private final UserRoleRepository userRoleRepository;
 	private final UserService userService;
 
-    public SchoolManagmentApplication(UserRoleService userRoleService, UserRoleRepository userRoleRepository, UserService userService) {
-        this.userRoleService = userRoleService;
-        this.userRoleRepository = userRoleRepository;
-        this.userService = userService;
-    }
+	public SchoolManagmentApplication(UserRoleService userRoleService, UserRoleRepository userRoleRepository, UserService userService) {
+		this.userRoleService = userRoleService;
+		this.userRoleRepository = userRoleRepository;
+		this.userService = userService;
+	}
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(SchoolManagmentApplication.class, args);
 	}
 

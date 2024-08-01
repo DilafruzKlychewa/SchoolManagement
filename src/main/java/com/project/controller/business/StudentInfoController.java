@@ -23,7 +23,7 @@ public class StudentInfoController {
     private final StudentInfoService studentInfoService;
 
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    @PostMapping("/save") // http://localhost:8080/studentInfo/save   + POST  + JSON
+    @PostMapping("/save") // http://localhost:8081/studentInfo/save   + POST  + JSON
     public ResponseMessage<StudentInfoResponse> saveStudentInfo(HttpServletRequest httpServletRequest,
                                                                 @RequestBody @Valid StudentInfoRequest studentInfoRequest){
 
@@ -32,14 +32,14 @@ public class StudentInfoController {
 
     // Not : ( ODEV )  Delete() ************************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    @DeleteMapping("/delete/{studentInfoId}")// http://localhost:8080/studentInfo/delete/1
+    @DeleteMapping("/delete/{studentInfoId}")// http://localhost:8081/studentInfo/delete/1
     public ResponseMessage delete (@PathVariable Long studentInfoId){
         return studentInfoService.deleteStudentInfo(studentInfoId);
     }
 
     // Not: ( ODEV ) getAllWithPage ********************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
-    @GetMapping("/getAllStudentInfoByPage") // http://localhost:8080/studentInfo/getAllStudentInfoByPage?page=0&size=10&sort=id&type=desc
+    @GetMapping("/getAllStudentInfoByPage") // http://localhost:8081/studentInfo/getAllStudentInfoByPage?page=0&size=10&sort=id&type=desc
     public Page<StudentInfoResponse> getAllStudentInfoByPage(
             @RequestParam(value = "page") int page,
             @RequestParam(value = "size") int size,
@@ -51,7 +51,7 @@ public class StudentInfoController {
 
     // Not: ( ODEV ) Update() *************************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    @PutMapping("/update/{studentInfoId}") // http://localhost:8080/studentInfo/update/1
+    @PutMapping("/update/{studentInfoId}") // http://localhost:8081/studentInfo/update/1
     // student id bilgisine ihtiyac olmadigi icin, icinde studentId olmayan yeni bir DTO yazdik
     public ResponseMessage<StudentInfoResponse>update(@RequestBody @Valid UpdateStudentInfoRequest studentInfoRequest,
                                                       @PathVariable Long studentInfoId){
@@ -60,7 +60,7 @@ public class StudentInfoController {
 
     // !!! -> Bir ogretmen kendi ogrencilerinin bilgilerini almak isterse :
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    @GetMapping("/getAllForTeacher")   // http://localhost:8080/studentInfo/getAllForTeacher
+    @GetMapping("/getAllForTeacher")   // http://localhost:8081/studentInfo/getAllForTeacher
     public ResponseEntity<Page<StudentInfoResponse>> getAllForTeacher(
             HttpServletRequest httpServletRequest,
             @RequestParam(value = "page") int page,
@@ -71,7 +71,7 @@ public class StudentInfoController {
 
     // !!! --> bir ogrenci kendi bilgilerini almak isterse
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    @GetMapping("/getAllForStudent")  // http://localhost:8080/studentInfo/getAllForStudent
+    @GetMapping("/getAllForStudent")  // http://localhost:8081/studentInfo/getAllForStudent
     public ResponseEntity<Page<StudentInfoResponse>> getAllForStudent(
             HttpServletRequest httpServletRequest,
             @RequestParam(value = "page") int page,

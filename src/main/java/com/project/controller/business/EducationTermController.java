@@ -20,7 +20,7 @@ public class EducationTermController {
     private final EducationTermService educationTermService;
 
     // Not: ODEVV save() *******************************************************************************
-    @PostMapping("/save")// http://localhost:8080/educationTerms/save + JSON + POST
+    @PostMapping("/save")// http://localhost:8081/educationTerms/save + JSON + POST
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public ResponseMessage<EducationTermResponse>saveEducationTerm(@RequestBody @Valid
                                                                    EducationTermRequest educationTermRequest){
@@ -29,20 +29,20 @@ public class EducationTermController {
 
     // Not: getById() ****************************************************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER')")
-    @GetMapping("/{id}") // http://localhost:8080/educationTerms/1 + GET
+    @GetMapping("/{id}") // http://localhost:8081/educationTerms/1 + GET
     public EducationTermResponse getEducationTermById(@PathVariable Long id){
         return educationTermService.getEducationTermById(id);
     }
     // Not: getAll ************************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER')")
-    @GetMapping("/getAll") // hhtp://localhost:8080/educationTerms/getAll  + GET
+    @GetMapping("/getAll") // hhtp://localhost:8081/educationTerms/getAll  + GET
     public List<EducationTermResponse> getAllEducationTerms(){
         return educationTermService.getAllEducationTerms();
     }
 
     //Not: getAllWithPage *****************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER')")
-    @GetMapping("/getAllEducationTermsByPage") // hhtp://localhost:8080/educationTerms/getAllEducationTermsByPage
+    @GetMapping("/getAllEducationTermsByPage") // hhtp://localhost:8081/educationTerms/getAllEducationTermsByPage
     public Page<EducationTermResponse> getAllEducationTermsByPage(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
@@ -54,14 +54,14 @@ public class EducationTermController {
 
     // Not:ODEVVV deleteById ********************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
-    @DeleteMapping("/delete/{id}") // http://localhost:8080/educationTerms/delete/1
+    @DeleteMapping("/delete/{id}") // http://localhost:8081/educationTerms/delete/1
     public ResponseMessage<?>deleteEducationTermById(@PathVariable Long id){
         return educationTermService.deleteEducationTermById(id);
     }
 
     //Not: ODEVVV UpdateById *********************************
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
-    @PutMapping("/update/{id}")// http://localhost:8080/educationTerms/update/1 + JSON
+    @PutMapping("/update/{id}")// http://localhost:8081/educationTerms/update/1 + JSON
     public ResponseMessage<EducationTermResponse>updateEducationTerm(@PathVariable Long id,
                                                                      @RequestBody @Valid EducationTermRequest educationTermRequest ){
         return educationTermService.updateEducationTerm(id,educationTermRequest);

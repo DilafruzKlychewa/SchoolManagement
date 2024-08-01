@@ -21,50 +21,50 @@ public class LessonProgramController {
 
     private final LessonProgramService lessonProgramService;
 
-    @PostMapping("/save") // http://localhost:8080/lessonPrograms/save + POST + JSON
+    @PostMapping("/save") // http://localhost:8081/lessonPrograms/save + POST + JSON
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public ResponseMessage<LessonProgramResponse> saveLessonProgram(@RequestBody @Valid
                                                                     LessonProgramRequest lessonProgramRequest){
         return lessonProgramService.saveLessonProgram(lessonProgramRequest);
     }
 
-    @GetMapping("/getAll")  // http://localhost:8080/lessonPrograms/getAll
+    @GetMapping("/getAll")  // http://localhost:8081/lessonPrograms/getAll
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER','STUDENT')")
     public List<LessonProgramResponse> getAllLessonProgram(){
         return lessonProgramService.getAllLessonProgram();
     }
 
     // Not : ( ODEV ) getById() *************************************************************
-    @GetMapping("/getById/{id}") //http://localhost:8080/lessonPrograms/getById/1
+    @GetMapping("/getById/{id}") //http://localhost:8081/lessonPrograms/getById/1
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public LessonProgramResponse getLessonProgramById(@PathVariable Long id){
         return lessonProgramService.getLessonProgramById(id);
     }
 
 
-    //herhangi bir kullanici atamasi yapilmamis butun dersprogramlari getirecegiz
-    @GetMapping("/getAllUnassigned")  // http://localhost:8080/lessonPrograms/getAllUnassigned
+    //herhangi bir kullanici atamasi yapilmamis butun ders programlari getirecegiz
+    @GetMapping("/getAllUnassigned")  // http://localhost:8081/lessonPrograms/getAllUnassigned
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER','STUDENT')")
     public List<LessonProgramResponse> getAllUnassigned(){
         return lessonProgramService.getAllUnassigned() ;
     }
 
     // Not : (ODEV ) getAllLessonProgramAssigned() *************************************
-    @GetMapping("/getAllAssigned") //http://localhost:8080/lessonPrograms/getAllAssigned
+    @GetMapping("/getAllAssigned") //http://localhost:8081/lessonPrograms/getAllAssigned
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER','STUDENT')")
     public List<LessonProgramResponse>getAllAssigned(){
         return lessonProgramService.getAllAssigned();
     }
 
     // Not : ( ODEV ) Delete() ********************************************************
-    @DeleteMapping("/delete/{id}") //http://localhost:8080/lessonPrograms/delete/1
+    @DeleteMapping("/delete/{id}") //http://localhost:8081/lessonPrograms/delete/1
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public ResponseMessage deleteLessonProgramById(@PathVariable Long id){
         return lessonProgramService.deleteLessonProgramById(id);
     }
 
     // Not : ( ODEV ) getAllWithPage() *************************************************
-    @GetMapping("/getAllLessonProgramByPage") // http://localhost:8080/lessonPrograms/getAllLessonProgramByPage?page=0&size=1&sort=id&type=desc
+    @GetMapping("/getAllLessonProgramByPage") // http://localhost:8081/lessonPrograms/getAllLessonProgramByPage?page=0&size=1&sort=id&type=desc
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','TEACHER','STUDENT')")
     public Page<LessonProgramResponse> getAllLessonProgramByPage (
             @RequestParam(value = "page") int page,
@@ -77,7 +77,7 @@ public class LessonProgramController {
 
     // bir Ogretmen kendine ait lessonProgramlari getiriyor
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    @GetMapping("/getAllLessonProgramByTeacher") // http://localhost:8080/lessonPrograms/getAllLessonProgramByTeacher
+    @GetMapping("/getAllLessonProgramByTeacher") // http://localhost:8081/lessonPrograms/getAllLessonProgramByTeacher
     public Set<LessonProgramResponse> getAllLessonProgramByTeacher(HttpServletRequest httpServletRequest){
 
         return lessonProgramService.getAllLessonProgramByUser(httpServletRequest);
@@ -85,7 +85,7 @@ public class LessonProgramController {
 
     // bir Ogrenci kendine ait lessonProgramlari getiriyor
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    @GetMapping("/getAllLessonProgramByStudent") // http://localhost:8080/lessonPrograms/getAllLessonProgramByStudent
+    @GetMapping("/getAllLessonProgramByStudent") // http://localhost:8081/lessonPrograms/getAllLessonProgramByStudent
     public Set<LessonProgramResponse> getAllLessonProgramByStudent(HttpServletRequest httpServletRequest){
 
         return lessonProgramService.getAllLessonProgramByUser(httpServletRequest);

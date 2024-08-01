@@ -58,16 +58,3 @@ public class LessonProgram {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -36,23 +36,16 @@ public class LessonProgramService {
     private final PageableHelper pageableHelper;
 
     public ResponseMessage<LessonProgramResponse> saveLessonProgram(LessonProgramRequest lessonProgramRequest) {
-
         Set<Lesson> lessons = lessonService.getLessonByLessonIdSet(lessonProgramRequest.getLessonIdList());
-
         EducationTerm educationTerm = educationTermService.findEducationTermById(lessonProgramRequest.getEducationTermId());
-
-        if(lessons.isEmpty()){
+        if (lessons.isEmpty()) {
             throw new ResourceNotFoundException(ErrorMessages.NOT_FOUND_LESSON_IN_LIST);
         }
-
         dateTimeValidator.checkTimeWithException(lessonProgramRequest.getStartTime(),
                 lessonProgramRequest.getStopTime());
-
         LessonProgram lessonProgram =
-                lessonProgramMapper.mapLessonProgramRequestToLessonProgram(lessonProgramRequest,lessons,educationTerm);
-
-        LessonProgram savedLessonProgram =  lessonProgramRepository.save(lessonProgram);
-
+                lessonProgramMapper.mapLessonProgramRequestToLessonProgram(lessonProgramRequest, lessons, educationTerm);
+        LessonProgram savedLessonProgram = lessonProgramRepository.save(lessonProgram);
         return ResponseMessage.<LessonProgramResponse>builder()
                 .message(SuccessMessages.LESSON_PROGRAM_SAVE)
                 .httpStatus(HttpStatus.CREATED)
@@ -61,7 +54,6 @@ public class LessonProgramService {
     }
 
     public List<LessonProgramResponse> getAllLessonProgram() {
-
         return lessonProgramRepository
                 .findAll()
                 .stream()
@@ -70,7 +62,6 @@ public class LessonProgramService {
     }
 
     public List<LessonProgramResponse> getAllUnassigned() {
-
         return lessonProgramRepository.findByUsers_IdNull()
                 .stream()
                 .map(lessonProgramMapper::mapLessonProgramToLessonProgramResponse)
@@ -78,25 +69,33 @@ public class LessonProgramService {
     }
 
     public Set<LessonProgramResponse> getAllLessonProgramByUser(HttpServletRequest httpServletRequest) {
-
         String userName = (String) httpServletRequest.getAttribute("username");
-
         return lessonProgramRepository.getLessonProgramByUsersUsername(userName)
                 .stream()
                 .map(lessonProgramMapper::mapLessonProgramToLessonProgramResponse)
                 .collect(Collectors.toSet());
     }
 
-    public LessonProgramResponse getLessonProgramById(Long id){
+    public LessonProgramResponse getLessonProgramById(Long id) {
         return lessonProgramMapper.mapLessonProgramtoLessonProgramResponse(isLessonProgramExistById(id));
     }
 
-    private LessonProgram isLessonProgramExistById(Long id){
-        return lessonProgramRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_LESSON_PROGRAM_MESSAGE,id)));
+    public Set<LessonProgram> getLessonProgramById(Set<Long> lessonIdSet) {
+        Set<LessonProgram> lessonPrograms = lessonProgramRepository.getLessonProgramByLessonProgramIdList(lessonIdSet);
+
+        if (lessonPrograms.isEmpty()) {
+            throw new ResourceNotFoundException(ErrorMessages.NOT_FOUND_LESSON_PROGRAM_MESSAGE_WITHOUT_ID_INFO);
+        }
+
+        return lessonPrograms;
     }
 
-    public List<LessonProgramResponse>getAllAssigned(){
+    private LessonProgram isLessonProgramExistById(Long id) {
+        return lessonProgramRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.NOT_FOUND_LESSON_PROGRAM_MESSAGE, id)));
+    }
+
+    public List<LessonProgramResponse> getAllAssigned() {
         return lessonProgramRepository.findByUsers_IdNotNull()
                 .stream()
                 .map(lessonProgramMapper::mapLessonProgramtoLessonProgramResponse)
@@ -112,9 +111,11 @@ public class LessonProgramService {
                 .build();
     }
 
-    public Page<LessonProgramResponse> getAllLessonProgramByPage(int page,int size, String sort,String type){
-        Pageable pageable = pageableHelper.getPageableWithProperties(page,size,sort,type);
+    public Page<LessonProgramResponse> getAllLessonProgramByPage(int page, int size, String sort, String type) {
+        Pageable pageable = pageableHelper.getPageableWithProperties(page, size, sort, type);
         return lessonProgramRepository.findAll(pageable)
                 .map(lessonProgramMapper::mapLessonProgramtoLessonProgramResponse);
     }
 }
+
+

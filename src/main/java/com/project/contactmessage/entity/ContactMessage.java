@@ -1,5 +1,4 @@
 package com.project.contactmessage.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,3 +50,4 @@ public class ContactMessage implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "US")
     private LocalDateTime dateTime;
 }
+
